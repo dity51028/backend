@@ -38,7 +38,22 @@ app.get('/public/index.js', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.js'));
   });
 
+app.get('/register',(req,res)=>{
+    res.render('register');
+});
 
+app.post('/register',async(req,res)=>{
+    console.log(req.body);
+    const {username,email,password} = req.body;
+
+    const newUser =await userModel.create({
+        userName : username,
+        email : email,
+        password : password,
+    });
+
+    res.send(newUser);
+})
 
 
 //custom middleware
