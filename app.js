@@ -42,6 +42,8 @@ app.get('/register',(req,res)=>{
     res.render('register');
 });
 
+
+//create operation
 app.post('/register',async(req,res)=>{
     console.log(req.body);
     const {username,email,password} = req.body;
@@ -54,6 +56,39 @@ app.post('/register',async(req,res)=>{
 
     res.send(newUser);
 })
+
+//read operation 
+
+app.get('/get-user',(req,res)=>{
+    userModel.findOne({
+        userName:'user1'
+    }).then((user)=>{
+        res.send(user);
+    })
+})
+
+//Update 
+
+app.get('/user-update',async (req,res)=>{
+    const updated = await userModel.findOneAndUpdate({
+        userName:'user1'
+    },{
+        email:"new@gmail.com"
+    })
+    res.send(updated);
+})
+
+
+//delete 
+
+app.get('/user-delete',async(req,res)=>{
+    await userModel.findOneAndDelete({
+        userName:'user1'
+    })
+
+    res.send('user deleted');
+})
+
 
 
 //custom middleware
